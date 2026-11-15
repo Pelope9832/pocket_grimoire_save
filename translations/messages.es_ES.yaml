@@ -233,6 +233,15 @@ night_order:
     swipe_change: Desliza para cambiar de noche.
     show: Mostrar personajes que no estén en juego.
     show_dead: Mostrar personajes muertos
+    dusk: Crepúsculo
+    dusk_description: Comienza la noche.
+    dawn: Amanecer
+    dawn_description: Termina la noche; todos despiertan.
+    minion: Turno de los Esbirros
+    minion_description: Los Esbirros se despiertan y conocen al Demonio y a los demás Esbirros.
+    demon: Turno del Demonio
+    demon_description: El Demonio se despierta y conoce a sus Esbirros y tres faroles.
+    show_minion_demon: Mostrar turnos de Esbirros y Demonio
 
 info_tokens:
     title: Fichas de Información

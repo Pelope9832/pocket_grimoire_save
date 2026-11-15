@@ -35,6 +35,14 @@
     object-fit: contain;
 }
 
+.night-order__symbol {
+    width: 2em;
+    height: 2em;
+    flex: 0 0 2em;
+    display: grid;
+    place-items: center;
+}
+
 .night-order__role {
     margin: 0;
     font-family: var(--serif-font);

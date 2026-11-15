@@ -11,12 +11,35 @@ import {
 
 const gameObserver = Observer.create("game");
 const tokenObserver = Observer.create("token");
-const nightOrder = new NightOrder();
+const nightOrder = new NightOrder({
+    dusk: {
+        name: I18N.nightOrderDusk,
+        description: I18N.nightOrderDuskDescription
+    },
+    dawn: {
+        name: I18N.nightOrderDawn,
+        description: I18N.nightOrderDawnDescription
+    },
+    minion: {
+        name: I18N.nightOrderMinion,
+        description: I18N.nightOrderMinionDescription
+    },
+    demon: {
+        name: I18N.nightOrderDemon,
+        description: I18N.nightOrderDemonDescription
+    }
+});
 const pad = lookupOneCached(".js--pad").pad;
 
 nightOrder.setHolders({
     first: lookupOneCached("#first-night"),
     other: lookupOneCached("#other-nights")
+});
+nightOrder.drawAllNightOrders();
+
+lookupOne("#show-minion-demon").addEventListener("input", ({ target }) => {
+    nightOrder.setShowMinionDemon(target.checked);
+
 });
 
 gameObserver.on("characters-selected", ({ detail }) => {

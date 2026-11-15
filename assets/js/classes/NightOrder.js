@@ -1,4 +1,5 @@
 import CharacterToken from "./CharacterToken";
+import Template from "./Template.js";
 import {
     empty,
     lookupOneCached,
@@ -9,7 +10,7 @@ import {
  */
 export default class NightOrder {
 
-    constructor() {
+    constructor(labels) {
 
         /**
          * Whether or not to show the dead characters.
@@ -38,12 +39,104 @@ export default class NightOrder {
             other: [],
         };
 
+        this.showMinionDemon = false;
+        this.specialTemplate = Template.create(
+            lookupOneCached("#night-order-special-template")
+        );
+        this.phaseEntries = {
+            first: [
+                this.createSpecialEntry({
+                    id: "dusk",
+                    order: 0,
+                    image: "https://villacuervos.es/img/dusk.webp",
+                    ...labels.dusk
+                }),
+                this.createSpecialEntry({
+                    id: "dawn",
+                    order: Number.POSITIVE_INFINITY,
+                    image: "https://villacuervos.es/img/dawn.webp",
+                    ...labels.dawn
+                })
+            ],
+            other: [
+                this.createSpecialEntry({
+                    id: "dusk",
+                    order: 0,
+                    image: "https://villacuervos.es/img/dusk.webp",
+                    ...labels.dusk
+                }),
+                this.createSpecialEntry({
+                    id: "dawn",
+                    order: Number.POSITIVE_INFINITY,
+                    image: "https://villacuervos.es/img/dawn.webp",
+                    ...labels.dawn
+                })
+            ]
+        };
+        this.minionDemonEntries = [
+            this.createSpecialEntry({
+                id: "minion",
+                order: 0.25,
+                image: "https://villacuervos.es/img/minion.webp",
+                ...labels.minion
+            }),
+            this.createSpecialEntry({
+                id: "demon",
+                order: 0.5,
+                image: "https://villacuervos.es/img/demon.webp",
+                ...labels.demon
+            })
+        ];
+
         /**
          * Holders for the night order elements.
          */
         this.holders = {
             first: null,
             other: null,
+        };
+
+    }
+
+    /**
+     * Creates a non-character entry for the night order.
+     *
+     * @param {Object} data
+     *        Information for the entry.
+     * @return {Object}
+     *         The display order and element for the entry.
+     */
+    createSpecialEntry({
+        id,
+        order,
+        name,
+        description,
+        image
+    }) {
+
+        const element = this.specialTemplate.draw({
+            ".night-order__item"(element) {
+                element.dataset.id = id;
+                element.classList.add(`night-order__item--${id}`);
+            },
+            ".night-order__icon"(element) {
+                if (image) {
+                    element.src = image;
+                } else {
+                    element.remove();
+                }
+            },
+            ".night-order__role"(element) {
+                element.textContent = name;
+            },
+            ".night-order__ability"(element) {
+                element.textContent = description;
+            }
+        }).firstElementChild;
+
+        return {
+            order,
+            element
         };
 
     }
@@ -210,49 +303,9 @@ export default class NightOrder {
      */
     placeInOrder(character) {
 
-        const index = this.getDataIndex(character);
-
-        if (index < 0) {
-            return;
+        if (this.getDataIndex(character) > -1) {
+            this.drawAllNightOrders();
         }
-
-        [
-            ["first", "getFirstNight"],
-            ["other", "getOtherNight"]
-        ].forEach(([property, method]) => {
-
-            const data = this.data[index][property];
-
-            if (!data) {
-                return;
-            }
-
-            const next = this.data
-                .filter((datum) => datum[property])
-                .sort((a, b) => a[property].order - b[property].order)
-                .find(({ order }) => order > character[method]());
-            const insertable = (
-                this.shouldShow(data)
-                ? data.element
-                : data.placeholder
-            );
-
-            if (next) {
-
-                this.holders[property].insertBefore(
-                    insertable,
-                    (
-                        next.element.parentElement
-                        ? next.element
-                        : next.placeholder
-                    )
-                );
-
-            } else {
-                this.holders[property].append(insertable);
-            }
-
-        });
 
     }
 
@@ -307,27 +360,44 @@ export default class NightOrder {
             ? "first"
             : "other"
         );
-
-        return data
+        const entries = data
             .filter((datum) => datum[property])
-            .sort((a, b) => a[property].order - b[property].order)
-            .reduce((fragment, data) => {
+            .map((datum) => ({
+                order: datum[property].order,
+                element: (
+                    this.shouldShow(datum)
+                    ? datum[property].element
+                    : datum[property].placeholder
+                )
+            }))
+            .concat(this.phaseEntries[property]);
 
-                const {
-                    element,
-                    placeholder,
-                } = data[property];
+        if (isFirstNight && this.showMinionDemon) {
+            entries.push(...this.minionDemonEntries);
+        }
 
-                fragment.append(
-                    this.shouldShow(data)
-                    ? element
-                    : placeholder
-                );
+        return entries
+            .sort((a, b) => a.order - b.order)
+            .reduce((fragment, { element }) => {
 
+                fragment.append(element);
                 return fragment;
 
             }, document.createDocumentFragment());
 
+
+    }
+
+    /**
+     * Sets whether the first-night Minion and Demon entries are shown.
+     *
+     * @param {Boolean} show
+     *        true to show the entries, false to hide them.
+     */
+    setShowMinionDemon(show) {
+
+        this.showMinionDemon = Boolean(show);
+        this.drawAllNightOrders();
 
     }
 

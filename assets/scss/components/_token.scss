@@ -64,6 +64,40 @@
     touch-action: none;
 }
 
+.night-order-marker {
+    width: clamp(70px, 16vw, 150px);
+    overflow: visible;
+    background: transparent;
+}
+
+.night-order-marker__face {
+    position: relative;
+    overflow: visible;
+}
+
+.night-order-marker__image,
+.night-order-marker__letter {
+    grid-area: 1 / -1;
+}
+
+.night-order-marker__image {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    z-index: 1;
+}
+
+.night-order-marker__letter {
+    z-index: 3;
+    align-self: center;
+    color: #fff;
+    font-family: var(--serif-font);
+    font-size: clamp(2.5rem, 9vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 0 0.1em #000, 0.06em 0.06em 0.08em #000;
+}
+
 .token--bluff[data-token] {
     transform: none;
 }

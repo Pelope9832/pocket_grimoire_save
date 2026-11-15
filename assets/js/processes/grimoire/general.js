@@ -3,6 +3,7 @@ import Positioner from "../../classes/Positioner.js";
 import Observer from "../../classes/Observer.js";
 import ReminderToken from "../../classes/ReminderToken.js";
 import Dialog from "../../classes/Dialog.js";
+import Template from "../../classes/Template.js";
 import TokenStore from "../../classes/TokenStore.js";
 import {
     lookup,
@@ -17,6 +18,81 @@ const tokenObserver = Observer.create("token");
 const padElement = lookupOneCached(".js--pad");
 const pad = new Pad(padElement, tokenObserver);
 padElement.pad = pad;
+
+const markerTemplate = Template.create(
+    lookupOneCached("#night-order-marker-template")
+);
+const markerTokens = new Map();
+const markerDetails = {
+    minion: {
+        label: I18N.nightOrderMinion,
+        letter: "M",
+        image: "https://villacuervos.es/img/minion.webp"
+    },
+    demon: {
+        label: I18N.nightOrderDemon,
+        letter: "D",
+        image: "https://villacuervos.es/img/demon.webp"
+    }
+};
+
+function setNightOrderMarkers(show) {
+
+    Object.entries(markerDetails).forEach(([id, details], index) => {
+
+        let token = markerTokens.get(id);
+
+        if (show) {
+
+            if (!token) {
+
+                token = markerTemplate.draw({
+                    ".night-order-marker"(element) {
+                        element.dataset.nightOrderMarker = id;
+                        element.setAttribute("aria-label", details.label);
+                    },
+                    ".night-order-marker__image"(element) {
+                        element.src = details.image;
+                    },
+                    ".night-order-marker__letter"(element) {
+                        element.textContent = details.letter;
+                    }
+                }).firstElementChild;
+                markerTokens.set(id, token);
+
+            }
+
+            if (!token.isConnected) {
+
+                const width = padElement.clientWidth || 320;
+                const tokenWidth = Math.min(150, Math.max(70, window.innerWidth * 0.16));
+                const left = (
+                    index === 0
+                    ? 12
+                    : Math.max(12, width - tokenWidth - 12)
+                );
+
+                padElement.append(token);
+                pad.moveToken(
+                    token,
+                    left,
+                    12,
+                    pad.tokens.advanceZIndex()
+                );
+
+            }
+
+        } else {
+            token?.remove();
+        }
+
+    });
+
+}
+
+lookupOneCached("#show-minion-demon").addEventListener("input", ({ target }) => {
+    setNightOrderMarkers(target.checked);
+});
 
 const styleObserver = new MutationObserver((mutations) => {
 

@@ -234,6 +234,15 @@ night_order:
     swipe_change: Swipe to change nights.
     show: Show characters not in play
     show_dead: Show dead characters
+    dusk: Dusk
+    dusk_description: The night begins.
+    dawn: Dawn
+    dawn_description: The night ends; everyone wakes.
+    minion: Minion turn
+    minion_description: The Minions wake and learn the Demon and the other Minions.
+    demon: Demon turn
+    demon_description: The Demon wakes and learns their Minions and three bluffs.
+    show_minion_demon: Show Minion and Demon turns
 
 info_tokens:
     title: Info Tokens

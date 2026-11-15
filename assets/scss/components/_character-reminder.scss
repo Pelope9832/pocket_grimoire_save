@@ -55,6 +55,12 @@
     }
 }
 
+.night-order-marker__face {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
 .character--top-1 { --top-leaf: url("../../img/token/top-1.webp"); }
 .character--top-2 { --top-leaf: url("../../img/token/top-2.webp"); }
 .character--top-3 { --top-leaf: url("../../img/token/top-3.webp"); }

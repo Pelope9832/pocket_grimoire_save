@@ -26,6 +26,12 @@
     <p><small>{{ 'night_order.swipe_change'|trans }}</small></p>
     {{ forms.switch({
         node: 'p',
+        label: 'night_order.show_minion_demon'|trans,
+        name: 'show-minion-demon',
+        id: 'show-minion-demon'
+    }) }}
+    {{ forms.switch({
+        node: 'p',
         label: 'night_order.show_dead'|trans,
         name: 'show-dead',
         id: 'show-dead'
@@ -49,5 +55,17 @@
             <span class="night-order__player-name js--night-info--player-name"></span>
         </div>
         <p class="night-order__ability js--night-info--ability"></p>
+    </li>
+</template>
+
+<template id="night-order-special-template">
+    <li class="night-order__item night-order__item--special">
+        <div class="night-order__heading">
+            <div class="night-order__symbol">
+                <img src="" alt="" class="night-order__icon" loading="lazy">
+            </div>
+            <p class="night-order__role"></p>
+        </div>
+        <p class="night-order__ability"></p>
     </li>
 </template>

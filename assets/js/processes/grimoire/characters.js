@@ -288,6 +288,18 @@ const nightOrder = {
     other: Object.create(null)
 };
 
+const nightOrderMarkers = {
+    minion: {
+        order: 0.25,
+        token: null
+    },
+    demon: {
+        order: 0.5,
+        token: null
+    }
+};
+let showMinionDemon = false;
+
 function getSortedKeys(object) {
     return Object.keys(object).sort((a, b) => Number(a) - Number(b));
 }
@@ -317,7 +329,77 @@ function updateTokens() {
 
 }
 
+function addNightOrderMarkers() {
+
+    if (!showMinionDemon) {
+        return;
+    }
+
+    Object.entries(nightOrderMarkers).forEach(([id, marker]) => {
+
+        const token = (
+            marker.token
+            || lookupOne(`[data-night-order-marker="${id}"]`)
+        );
+
+        if (!token) {
+            throw new ReferenceError(`Cannot find the "${id}" night-order marker`);
+        }
+
+        marker.token = token;
+
+        if (!nightOrder.first[marker.order]) {
+            nightOrder.first[marker.order] = [];
+        }
+
+        nightOrder.first[marker.order].push({ token });
+
+    });
+
+}
+
+function setNightOrderMarkers(show) {
+
+    showMinionDemon = Boolean(show);
+
+    Object.values(nightOrderMarkers).forEach(({ order, token }) => {
+
+        if (!token) {
+            return;
+        }
+
+        const entries = nightOrder.first[order];
+
+        if (entries) {
+
+            const remaining = entries.filter((entry) => entry.token !== token);
+
+            if (remaining.length) {
+                nightOrder.first[order] = remaining;
+            } else {
+                delete nightOrder.first[order];
+            }
+
+        }
+
+        Pad.getToken(token).removeAttribute("data-first-night");
+
+    });
+
+    if (showMinionDemon) {
+        addNightOrderMarkers();
+    }
+
+    updateTokens();
+
+}
+
 function resetTokens(characters) {
+
+    Object.values(nightOrderMarkers).forEach(({ token }) => {
+        token && Pad.getToken(token).removeAttribute("data-first-night");
+    });
+
     empty(nightOrder.first);
     empty(nightOrder.other);
     metaOrder.firstNight.length = 0;
@@ -331,6 +413,7 @@ function resetTokens(characters) {
         });
     });
 
+    addNightOrderMarkers();
     updateTokens();
 }
 
@@ -338,6 +421,10 @@ const metaOrder = {
     firstNight: [],
     otherNight: [],
 };
+
+lookupOneCached("#show-minion-demon").addEventListener("input", ({ target }) => {
+    setNightOrderMarkers(target.checked);
+});
 
 gameObserver.on("characters-selected", ({ detail }) => {
     resetTokens(detail.characters);
