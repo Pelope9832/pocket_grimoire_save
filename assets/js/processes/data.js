@@ -38,14 +38,14 @@ Promise.all([
                 id: TokenStore.EMPTY,
                 name: "",
                 text: I18N.goodTeam,
-                image: "/build/img/roles/generic/good.webp",
+                image: "https://release.botc.app/resources/characters/generic/good.webp",
                 isGlobal: true
             },
             {
                 id: TokenStore.EMPTY,
                 name: "",
                 text: I18N.evilTeam,
-                image: "/build/img/roles/generic/evil.webp",
+                image: "https://release.botc.app/resources/characters/generic/evil.webp",
                 isGlobal: true
             }
         ],

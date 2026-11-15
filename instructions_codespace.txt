@@ -1,0 +1,22 @@
+1. Ejecutar la primera vez
+composer install
+yarn install
+
+docker compose up -d database
+
+php bin/console doctrine:migrations:migrate
+
+yarn dev
+
+(opcion a) symfony serve
+(opcion b) php -S localhost:8000 -t public
+
+Cambios
+-------
+0. idioma ES por defecto
+> que los archivos de guardado incluyan minutos y segundos, ademas de dia
+> foto de personaje y foto de recordatorio
+> se puede cargar desde guion
+1. Se puede guardar y cargar
+2. un boton junto a mostrar todos los faroles de mostrar el grimorio con las fichas en blanco y sin recordatorios, 
+pero con los nombres de los jugadores si están puestos

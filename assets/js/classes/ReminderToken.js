@@ -65,6 +65,7 @@ export default class ReminderToken extends Token {
             characterId: "",
             characterName: "",
             isGlobal: false,
+            isUpsideDown: false,
             ...data
         };
 
@@ -96,10 +97,14 @@ export default class ReminderToken extends Token {
         const {
             image,
             text,
-            characterName
+            characterName,
+            isUpsideDown
         } = this.data;
 
         return this.constructor.templates.token.draw({
+            ".reminder"(element) {
+                element.classList.toggle("is-upside-down", isUpsideDown);
+            },
             ".js--reminder--name"(element) {
                 element.textContent = characterName;
             },
@@ -140,6 +145,26 @@ export default class ReminderToken extends Token {
                 element.value = id;
             }
         });
+
+    }
+
+    /**
+     * Toggles the upside-down state for this reminder.
+     *
+     * @param {Boolean} [state]
+     *        Optional state to set. If omitted, the state is toggled.
+     * @return {Boolean}
+     *         The new state.
+     */
+    rotate(state) {
+
+        if (state === undefined) {
+            state = !this.data.isUpsideDown;
+        }
+
+        this.data.isUpsideDown = state;
+
+        return Boolean(state);
 
     }
 

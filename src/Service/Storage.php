@@ -204,6 +204,11 @@ class Storage
     {
         $fullFrom = static::concat($this->getRealpath(array_shift($from)), ...$from);
         $fullTo = static::concat($this->getRealpath(array_shift($to)), ...$to);
+        $directory = dirname($fullTo);
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0775, true);
+        }
 
         return copy($fullFrom, $fullTo);
     }

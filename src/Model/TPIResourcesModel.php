@@ -17,7 +17,7 @@ class TPIResourcesModel
     /**
      * @var string Location wrapper for the images.
      */
-    const LOCATION_IMAGES = '/build/img/roles/%s.webp';
+    const LOCATION_IMAGES = 'https://release.botc.app/resources/characters/%s/%s.webp';
 
     /**
      * Expands the reminders to include examples of the reminder text, allowing
@@ -133,7 +133,11 @@ class TPIResourcesModel
                 $cleanRole['otherNightReminder'] = $this->cleanNightReminder($role->otherNightReminder);
             }
 
-            $cleanRole['image'] = $this->generateImages($role->id, $role->team);
+            $cleanRole['image'] = $this->generateImages(
+                $role->id,
+                $role->team,
+                $role->edition,
+            );
 
             $expanded[] = $cleanRole;
         }
@@ -193,9 +197,10 @@ class TPIResourcesModel
      *
      * @param string $id Role ID.
      * @param string $team Role's team.
+     * @param string $edition Role's edition.
      * @return array<string> Array of image locations.
      */
-    protected function generateImages(string $id, string $team): array
+    protected function generateImages(string $id, string $team, string $edition): array
     {
         $images = [];
 
@@ -220,8 +225,8 @@ class TPIResourcesModel
             break;
         }
 
-        return array_map(function ($image) {
-            return sprintf(static::LOCATION_IMAGES, $image);
+        return array_map(function ($image) use ($edition) {
+            return sprintf(static::LOCATION_IMAGES, $edition, $image);
         }, $images);
     }
 }

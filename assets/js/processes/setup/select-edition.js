@@ -306,7 +306,12 @@ function processJSON({
 
                     showInputError(input, message);
                 }
-        });
+            })
+            .catch((error) => {
+                setFormLoadingState(form, false);
+                console.error("Unable to process the custom script", error);
+                showInputError(input, I18N.homebrewError);
+            });
     }
 
     const meta = extractMetaEntry(json);

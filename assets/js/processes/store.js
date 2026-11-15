@@ -104,7 +104,11 @@ tokenObserver.on("shroud-toggle", ({ detail }) => {
 });
 
 tokenObserver.on("rotate-toggle", ({ detail }) => {
-    store.rotate(pad.getCharacterByToken(detail.token), detail.isUpsideDown);
+    const token = (
+        pad.getCharacterByToken(detail.token)
+        || pad.getReminderByToken(detail.token)
+    );
+    store.rotate(token, detail.isUpsideDown);
 });
 
 tokenObserver.on("set-player-name", ({ detail }) => {
@@ -240,6 +244,8 @@ TokenStore.ready((tokenStore) => {
             pad.setPlayerName(character, playerName);
             pad.setGhostVote(character, Boolean(ghostVote));
 
+        } else {
+            pad.rotateReminder(info.reminder, Boolean(isUpsideDown));
         }
 
         if (zIndex > finalZIndex) {

@@ -70,7 +70,8 @@ Download the files and then go into that folder using the command line. You can 
 
 ### Step 1: Database
 
-Create a database and set up `.env.local` with the connection details.
+Enable PHP's `pdo_pgsql` extension, create a PostgreSQL database, and set up
+`.env.local` with the connection details.
 
 ### Step 2: Set up the database
 

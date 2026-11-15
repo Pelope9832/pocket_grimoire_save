@@ -251,6 +251,23 @@ TokenStore.ready((tokenStore) => {
 
     });
 
+    const playerViewButton = lookupOne("#toggle-player-grimoire");
+    const grimoirePad = lookupOneCached(".js--pad");
+
+    playerViewButton.addEventListener("click", () => {
+
+        const isPlayerView = grimoirePad.classList.toggle("pad--player-view");
+
+        grimoirePad.inert = isPlayerView;
+        playerViewButton.setAttribute("aria-pressed", String(isPlayerView));
+        playerViewButton.textContent = (
+            isPlayerView
+            ? playerViewButton.dataset.hideLabel
+            : playerViewButton.dataset.showLabel
+        );
+
+    });
+
     gameObserver.on("clear", () => {
 
         bluffGroups.removeAll();

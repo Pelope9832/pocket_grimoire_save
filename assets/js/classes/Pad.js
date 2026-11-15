@@ -437,6 +437,47 @@ export default class Pad {
     }
 
     /**
+     * Toggles the rotated state for the reminder that's been given.
+     *
+     * @param {ReminderToken} reminder
+     *        The reminder whose rotated state should be toggled.
+     * @param {Boolean} [rotateState]
+     *        Optional rotated state to set.
+     */
+    rotateReminder(reminder, rotateState) {
+
+        const info = this.reminders.find(({ reminder: item }) => item === reminder);
+
+        if (!info) {
+            return;
+        }
+
+        const isUpsideDown = reminder.rotate(rotateState);
+        info.token
+            .querySelector(".reminder")
+            .classList
+            .toggle("is-upside-down", isUpsideDown);
+        this.observer.trigger("rotate-toggle", {
+            isUpsideDown,
+            token: info.token,
+            reminder
+        });
+
+    }
+
+    /**
+     * A helper function for rotating a reminder by its element.
+     *
+     * @param {Element} token
+     *        The reminder token element.
+     * @param {Boolean} [rotateState]
+     *        Optional rotated state to set.
+     */
+    rotateReminderByToken(token, rotateState) {
+        this.rotateReminder(this.getReminderByToken(token), rotateState);
+    }
+
+    /**
      * Gets the player name for the character that's been given.
      *
      * @param  {CharacterToken} character

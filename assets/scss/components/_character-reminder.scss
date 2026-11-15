@@ -123,6 +123,10 @@
         inset 0 0 1em #111324,
         inset 0 0 0.5em #111324,
         0.1em 0.1em 0.2em rgb(0 0 0 / 0.8);
+
+    &.is-upside-down {
+        transform: rotate(180deg);
+    }
 }
 
 .character__image,
@@ -238,4 +242,25 @@
 
 .reminder__icon {
     width: 70%;
+}
+
+.pad--player-view {
+    > .token[data-token="reminder"] {
+        display: none;
+    }
+
+    .character {
+        --top-leaf: var(--no-leaf);
+        --left-leaf: var(--no-leaf);
+        --right-leaf: var(--no-leaf);
+        --setup-leaf: var(--no-leaf);
+        background-image: none;
+    }
+
+    .character__image,
+    .character__text,
+    .character[data-first-night]::before,
+    .character[data-other-night]::after {
+        display: none;
+    }
 }

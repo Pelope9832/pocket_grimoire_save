@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
@@ -19,6 +20,14 @@ final class Version20220418091605 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        if ($this->connection->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            $this->addSql('CREATE INDEX identifier_idx_editions ON editions (identifier)');
+            $this->addSql('CREATE INDEX identifier_idx_roles ON roles (identifier)');
+            $this->addSql('CREATE INDEX identifier_idx_teams ON teams (identifier)');
+
+            return;
+        }
+
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE INDEX identifier_idx ON editions (identifier)');
         $this->addSql('CREATE INDEX identifier_idx ON roles (identifier)');
@@ -27,6 +36,14 @@ final class Version20220418091605 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
+        if ($this->connection->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            $this->addSql('DROP INDEX identifier_idx_editions');
+            $this->addSql('DROP INDEX identifier_idx_roles');
+            $this->addSql('DROP INDEX identifier_idx_teams');
+
+            return;
+        }
+
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP INDEX identifier_idx ON editions');
         $this->addSql('DROP INDEX identifier_idx ON roles');

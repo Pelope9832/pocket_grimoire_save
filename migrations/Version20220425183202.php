@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
@@ -19,12 +20,24 @@ final class Version20220425183202 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        if ($this->connection->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            $this->addSql("ALTER TABLE roles ALTER COLUMN name SET DEFAULT ''");
+
+            return;
+        }
+
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE roles CHANGE name name VARCHAR(255) DEFAULT \'\' NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
+        if ($this->connection->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            $this->addSql('ALTER TABLE roles ALTER COLUMN name DROP DEFAULT');
+
+            return;
+        }
+
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE roles CHANGE name name VARCHAR(255) NOT NULL');
     }

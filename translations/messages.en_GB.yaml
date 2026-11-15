@@ -40,11 +40,16 @@ messages:
     version_change_message: This app has updated its version. Because your data may not be correct, we recommend that you clear everything in the "Clear Cache" dialog. Press "OK" to open the dialog or "Cancel" to close this message.
     invalid_script: The script format has not been recognised.
     no_characters: The script doesn't contain any recognised characters.
+    homebrew_error: The custom script could not be processed. Check the connection to the server and database.
     invalid_data: Invalid data.
     no_data: No data sent.
     player_name: What is the name of this player?
     custom_info_token: "What do you want your new info token to say? Use **double asterisks** to emphasise text."
     bag_disabled: 'Cannot add these characters to the bag: {0}'
+    save_game: Save game
+    load_game: Load game
+    invalid_game_save: The selected file does not look like a Pocket Grimoire save. Load a file created with “Save game”.
+    game_save_load_error: The loaded game could not be saved in this browser.
 
 setup:
 
@@ -55,6 +60,8 @@ setup:
         select_characters: Select Characters
         qr_code_button: Character Sheet
         clear_cache_button: Clear Cache
+        save_game_button: Save game
+        load_game_button: Load game
         language: Language
         set_language: Set Language
 
@@ -68,6 +75,7 @@ setup:
         custom_note: Upload a custom script, enter the URL of a custom script, or paste the JSON directly.
         custom_warning: Only load custom JSON files from sources that you trust!
         upload: Upload a custom script
+        upload_button: Choose JSON file
         url: Enter a URL
         paste: Paste from clipboard
         select: Select
@@ -139,6 +147,8 @@ grimoire:
         bluffs: Demon Bluffs
         show_bluffs: Show all bluffs
         add_bluffs: Add bluffs
+        show_player_view: Show player view
+        hide_player_view: Return to Storyteller view
         add_token: Add token
         add_reminder: Add reminder
         add_traveller: Add traveller
@@ -176,6 +186,7 @@ grimoire:
 
     reminder_show:
         title: Reminder
+        rotate: Turn over
         remove: Remove
 
     bluff_show:

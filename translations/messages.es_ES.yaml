@@ -40,9 +40,14 @@ messages:
     version_change_message: Esta app ha sido actualizada. Como puede que tus datos sean incorrectos, recomendamos que limpies todo en la opción "Limpiar Cache". Presiona "OK" para abrir el diálogo o "Cancelar" para cerrar este mensaje.
     invalid_script: No se reconoce el formato de guión.
     no_characters: El guión no contiene ningún personaje reconocido.
+    homebrew_error: No se pudo procesar el guion personalizado. Revisa la conexión con el servidor y la base de datos.
     player_name: ¿Cual es el nombre de este jugador?
     custom_info_token: ¿Que quieres que diga esta nueva ficha de información? Usa **asteriscos dobles** para enfatizar el texto.
     bag_disabled: 'No se pueden agregar estos personajes a la bolsa: {0}'
+    save_game: Guardar partida
+    load_game: Cargar partida
+    invalid_game_save: El archivo seleccionado no parece una partida guardada de Pocket Grimoire. Carga un archivo creado con «Guardar partida».
+    game_save_load_error: No se pudo guardar la partida cargada en este navegador.
 
 setup:
 
@@ -53,6 +58,8 @@ setup:
         select_characters: Elegir Personajes
         qr_code_button: Hoja de Personajes
         clear_cache_button: Limpiar Cache
+        save_game_button: Guardar partida
+        load_game_button: Cargar partida
         language: Idioma
         set_language: Elegir Idioma
 
@@ -66,6 +73,7 @@ setup:
         custom_note: Sube un guión personalizado o ingresa la URL del guión personalizado.
         custom_warning: Solo subir archivos JSON personalizados de fuentes confiables!
         upload: Subir un guión personalizado
+        upload_button: Cargar archivo JSON
         url: Ingresar URL
         paste: Pegar desde el portapapeles
         unsupported: Por favor tener en cuenta que actualmente el Grimorio de Bolsillo es incompatible con guiones homebrew o localizados.
@@ -138,6 +146,8 @@ grimoire:
         bluffs: Mentiras para el Demonio
         show_bluffs: Mostrar todos los faroles
         add_bluffs: Añadir bluffs
+        show_player_view: Mostrar vista para jugadores
+        hide_player_view: Volver a vista del narrador
         add_token: Agregar ficha
         add_reminder: Agregar recordatorio
         add_traveller: Agregar viajero
@@ -175,6 +185,7 @@ grimoire:
 
     reminder_show:
         title: Recordatorio
+        rotate: Dar la vuelta
         remove: Quitar
 
     bluff_show:

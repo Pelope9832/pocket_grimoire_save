@@ -2,6 +2,45 @@
     display: grid;
 }
 
+.file-upload--button {
+    display: inline-grid;
+    position: relative;
+    vertical-align: middle;
+
+    .file-upload__input {
+        position: absolute;
+        inset: 0;
+    }
+
+    .file-upload__render {
+        width: auto;
+        height: auto;
+        min-height: 2em;
+        align-items: center;
+        justify-content: center;
+        border: 0.1em solid #000;
+        border-radius: 0.2em;
+        box-shadow:
+            inset 0.1em 0.1em 0.2em rgb(255 255 255 / 30%),
+            inset -0.1em -0.1em 0.2em rgb(0 0 0 / 30%),
+            0.1em 0.1em 0.2em rgb(0 0 0 / 40%);
+        padding: 0.25em 0.65em;
+        background-color: #679fd0;
+
+        &::before {
+            display: none;
+        }
+
+        &::after {
+            border: 0;
+            border-radius: 0;
+            background: none;
+            box-shadow: none;
+            padding: 0;
+        }
+    }
+}
+
 .file-upload__input,
 .file-upload__render {
     grid-area: 1 / 1;

@@ -352,11 +352,11 @@ export default class Store {
     }
 
     /**
-     * Toggles the "upside-down" state of the given character.
+     * Stores the "upside-down" state of the given token.
      *
-     * @param {CharacterToken} token
-     *        Character whose upside-down state should be updated in the store.
-     * @param {Boolean} isDead
+     * @param {Token} token
+     *        Token whose upside-down state should be updated in the store.
+     * @param {Boolean} isUpsideDown
      *        The upside-down state to store.
      */
     rotate(token, isUpsideDown) {

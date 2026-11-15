@@ -24,7 +24,7 @@
 {% endmacro %}
 
 {% macro file(settings) %}
-<span class="file-upload">
+<span class="file-upload {{ settings.classes|default('') }}">
     <input type="file"
         class="file-upload__input"
         name="{{ settings.name }}"

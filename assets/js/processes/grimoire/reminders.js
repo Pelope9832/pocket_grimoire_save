@@ -144,6 +144,13 @@ TokenStore.ready((tokenStore) => {
 
     });
 
+    lookupOne("#reminder-rotate").addEventListener("click", ({ target }) => {
+
+        pad.rotateReminderByToken(lookupOne(reminderHolder.dataset.token));
+        hideDialog(target);
+
+    });
+
     // Remove a reminder when its "remove" button is clicked.
     lookupOne("#reminder-remove").addEventListener("click", () => {
 
